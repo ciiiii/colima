@@ -2,11 +2,12 @@ package docker
 
 import (
 	"fmt"
+	"os"
+	"strconv"
+
 	"github.com/abiosoft/colima/cli"
 	"github.com/abiosoft/colima/config"
 	"github.com/abiosoft/colima/environment"
-	"os"
-	"strconv"
 )
 
 // Name is container runtime name.
@@ -107,7 +108,7 @@ func (d dockerRuntime) Start() error {
 		return d.host.RunQuiet("launchctl", "load", d.launchd.File())
 	})
 	a.Add(func() error {
-		_ = d.guest.Run("docker", "run", "--privileged", "--rm", "tonistiigi/binfmt", "--install", "all")
+		_ = d.guest.Run("docker", "run", "--privileged", "--rm", "hub.oneitfarm.com/tonistiigi/binfmt", "--install", "all")
 		return nil
 	})
 
